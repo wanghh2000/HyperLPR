@@ -14,6 +14,8 @@ chars = ["京", "沪", "津", "渝", "冀", "晋", "蒙", "辽", "吉", "黑", "
              "Y", "Z","港","学","使","警","澳","挂","军","北","南","广","沈","兰","成","济","海","民","航","空"
              ];
 pred_model = model.construct_model("./model/ocr_plate_all_w_rnn_2.h5",)
+#pred_model = model.construct_model("./model/ocr_plate_all_gru.h5",)
+
 import time
 
 

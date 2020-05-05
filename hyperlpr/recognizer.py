@@ -5,8 +5,8 @@ from keras.layers import Conv2D,MaxPool2D
 from keras.optimizers import SGD
 from keras import backend as K
 
-K.set_image_dim_ordering('tf')
-
+#K.set_image_dim_ordering('tf')
+K.image_data_format() == 'channels_first'
 
 import cv2
 import numpy as np

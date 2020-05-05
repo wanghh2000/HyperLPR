@@ -3,9 +3,9 @@ import cv2
 import numpy as np
 
 
-import niblack_thresholding as nt
+from . import niblack_thresholding as nt
 
-import deskew
+from . import deskew
 
 def fitLine_ransac(pts,zero_add = 0 ):
     if len(pts)>=2:

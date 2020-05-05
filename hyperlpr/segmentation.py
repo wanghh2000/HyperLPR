@@ -19,7 +19,8 @@ from keras.layers import Conv2D, MaxPool2D
 from keras.optimizers import SGD
 from keras import backend as K
 
-K.set_image_dim_ordering('tf')
+#K.set_image_dim_ordering('tf')
+K.image_data_format() == 'channels_first'
 
 
 def Getmodel_tensorflow(nb_classes):
@@ -148,7 +149,7 @@ def searchOptimalCuttingPoint(rgb,res_map,start,width_boundingbox,interval_range
                     # print score
                     score_list.append([score,[p1,p2,p3,p4,p5,p6,p7]])
                     p+=1
-    print p
+    print(p)
 
     score_list = sorted(score_list , key=lambda x:x[0])
     # for one in score_list[-1][1]:
@@ -157,15 +158,15 @@ def searchOptimalCuttingPoint(rgb,res_map,start,width_boundingbox,interval_range
     # cv2.imshow("one",debug)
     # cv2.waitKey(0)
     #
-    print "寻找最佳点",time.time()-t0
+    print("寻找最佳点",time.time()-t0)
     return score_list[-1]
 
 
 import sys
 
 sys.path.append('../')
-import recognizer as cRP
-import niblack_thresholding as nt
+from . import recognizer as cRP
+from . import niblack_thresholding as nt
 
 def refineCrop(sections,width=16):
     new_sections = []
@@ -256,7 +257,7 @@ def slidingWindowsEval(image):
         data_sets.append(data)
 
     res = model2.predict(np.array(data_sets))
-    print "分割",time.time() - t0
+    print("分割",time.time() - t0)
 
     pin = res
     p = 1 -  (res.T)[1]
@@ -315,6 +316,6 @@ def slidingWindowsEval(image):
         # cv2.waitKey(0)
         confidence+=res_pre[0]
         name+= res_pre[1]
-    print "字符识别",time.time() - t0
+    print("字符识别",time.time() - t0)
 
     return refined,name,confidence

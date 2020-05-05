@@ -5,7 +5,8 @@ from keras.layers import Conv2D,MaxPool2D
 from keras.optimizers import SGD
 from keras import backend as K
 
-K.set_image_dim_ordering('tf')
+#K.set_image_dim_ordering('tf')
+K.image_data_format() == 'channels_first'
 
 
 import cv2
@@ -130,7 +131,8 @@ def SimplePredict(image,pos):
     image = cv2.equalizeHist(image)
     image = image.astype(np.float) / 255
     image -= image.mean()
-    image = np.expand_dims(image, 3)
+    #image = np.expand_dims(image, 3)
+    image = np.expand_dims(image, 2)
     if pos!=0:
         res = np.array(model.predict(np.array([image]))[0])
     else:

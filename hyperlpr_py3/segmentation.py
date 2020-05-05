@@ -19,7 +19,8 @@ from keras.layers import Conv2D, MaxPool2D
 from keras.optimizers import SGD
 from keras import backend as K
 
-K.set_image_dim_ordering('tf')
+#K.set_image_dim_ordering('tf')
+K.image_data_format() == 'channels_first'
 
 
 def Getmodel_tensorflow(nb_classes):
@@ -176,7 +177,8 @@ def refineCrop(sections,width=16):
 
         sec_center = np.array([section.shape[1]/2,section.shape[0]/2])
         binary_niblack = nt.niBlackThreshold(section,17,-0.255)
-        imagex, contours, hierarchy  = cv2.findContours(binary_niblack,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        # imagex, contours, hierarchy  = cv2.findContours(binary_niblack,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy  = cv2.findContours(binary_niblack,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
         boxs = []
         for contour in contours:
             x,y,w,h = cv2.boundingRect(contour)
@@ -239,7 +241,11 @@ def slidingWindowsEval(image):
         # cv2.imshow("image",data)
         data = cv2.equalizeHist(data)
         data = data.astype(np.float)/255
-        data=  np.expand_dims(data,3)
+        # np.expand_dims:用于扩展数组的形状
+        # np.expand_dims(a, axis=1)表示在1位置添加数据
+        # print(data.shape)
+        # data = np.expand_dims(data,3)
+        data = np.expand_dims(data,2)
         data_sets.append(data)
 
     res = model2.predict(np.array(data_sets))
